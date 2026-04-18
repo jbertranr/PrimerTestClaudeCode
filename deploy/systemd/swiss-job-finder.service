@@ -1,0 +1,17 @@
+[Unit]
+Description=Swiss Job Finder — daily job scraper for Arnaud
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=arnaud
+WorkingDirectory=/home/arnaud/swiss-job-finder
+ExecStart=/home/arnaud/swiss-job-finder/.venv/bin/python main.py
+EnvironmentFile=/home/arnaud/swiss-job-finder/.env
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=swiss-job-finder
+
+[Install]
+WantedBy=multi-user.target

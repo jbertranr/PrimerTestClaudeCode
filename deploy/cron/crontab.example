@@ -1,0 +1,3 @@
+# Swiss Job Finder — run every day at 08:00 (Europe/Zurich = UTC+2 in summer)
+# To install: crontab -e  (then paste the line below)
+0 6 * * * /home/arnaud/swiss-job-finder/.venv/bin/python /home/arnaud/swiss-job-finder/main.py >> /var/log/swiss-job-finder.log 2>&1

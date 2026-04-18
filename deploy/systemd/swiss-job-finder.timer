@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Swiss Job Finder daily at 08:00 Europe/Zurich
+
+[Timer]
+OnCalendar=*-*-* 08:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

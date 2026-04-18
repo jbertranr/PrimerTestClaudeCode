@@ -1,0 +1,11 @@
+.env
+*.db
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.playwright/
+playwright-browsers/
+*.log
+.DS_Store

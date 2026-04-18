@@ -1,0 +1,26 @@
+Voici le profil du candidat :
+<candidat>
+Nom : {{ candidate.name }}
+Formation : {{ candidate.education }}
+Expériences clés :
+{% for exp in candidate.experience %}
+- {{ exp }}
+{% endfor %}
+Langues : {{ candidate.languages | join(", ") }}
+Compétences : {{ candidate.skills | join(", ") }}
+Objectif professionnel : {{ candidate.goal }}
+</candidat>
+
+Voici l'offre d'emploi :
+<offre>
+Titre : {{ job.title }}
+Entreprise : {{ job.company }}
+Lieu : {{ job.location }}
+Description :
+{{ job.description[:1500] }}
+URL : {{ job.url }}
+</offre>
+
+Rédige une lettre de motivation personnalisée pour ce poste, en tenant compte
+du profil du candidat et des spécificités de l'offre.
+Retourne uniquement un objet JSON valide avec les champs "letter" et "subject_line".

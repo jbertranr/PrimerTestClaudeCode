@@ -1,0 +1,95 @@
+# ============================================================
+#  Swiss Job Finder — Configuration
+#  Edit this file to customise your search. No coding needed.
+# ============================================================
+
+candidate:
+  name: "Arnaud"
+  languages:
+    - "Français (courant)"
+    - "Anglais"
+    - "Espagnol"
+    - "Catalan"
+  education: "Bachelor en Tourisme, Université de Gérone (UDG), Espagne"
+  experience:
+    - "Serveur à bord du Glacier Express, Suisse (2 mois)"
+    - "Agent de voyages (poste actuel)"
+  skills:
+    - "Outils IA (ChatGPT, AI Studio, génération d'images)"
+    - "Informatique avancée"
+    - "Développement de jeux de société"
+  goal: >
+    Retourner en Suisse romande, débuter comme serveur si nécessaire,
+    puis évoluer vers un poste dans le tourisme correspondant à ma formation.
+
+search:
+  # Cantons of French-speaking Switzerland (Romandy)
+  cantons: ["GE", "VD", "NE", "FR", "VS"]
+  locations:
+    - "Genève"
+    - "Lausanne"
+    - "Neuchâtel"
+    - "Fribourg"
+    - "Sion"
+    - "Martigny"
+    - "Montreux"
+    - "Verbier"
+    - "Crans-Montana"
+    - "Zermatt"
+
+  categories:
+    hospitality:
+      keywords:
+        - "serveur"
+        - "serveuse"
+        - "restauration"
+        - "hôtellerie"
+        - "barman"
+        - "chef de rang"
+        - "waiter"
+        - "F&B"
+      max_results_per_source: 20
+
+    tourism:
+      keywords:
+        - "tourisme"
+        - "agent de voyages"
+        - "guide touristique"
+        - "réceptionniste hôtel"
+        - "office du tourisme"
+        - "accueil"
+        - "concierge"
+        - "animateur"
+      max_results_per_source: 20
+
+  # Only consider jobs posted in the last N hours
+  hours_old: 24
+
+sources:
+  jobspy: true      # LinkedIn + Indeed Switzerland (free, no auth)
+  jobup: true       # jobup.ch — best French-speaking Swiss portal
+  jobs_ch: true     # jobs.ch — largest Swiss job board
+
+notifications:
+  telegram:
+    enabled: true
+    # Set TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID in your .env file
+    max_jobs_per_digest: 30
+
+  email:
+    enabled: false
+    # Set SMTP_* vars in your .env file
+
+llm:
+  # Set to true only if you have an ANTHROPIC_API_KEY in .env
+  enabled: false
+  model: "claude-haiku-4-5"
+  max_tokens: 1200
+  # Generate cover letters only for the N most relevant jobs per day
+  generate_for_top_n: 5
+
+# Daily run schedule (used by scheduler.py daemon mode)
+schedule:
+  hour: 8
+  minute: 0
+  timezone: "Europe/Zurich"
