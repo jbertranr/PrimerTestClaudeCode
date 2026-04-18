@@ -90,7 +90,59 @@ Cover letters are generated in French, tailored to each job posting, and sent as
 
 ---
 
-## Running daily automatically
+## Deploying on PythonAnywhere (recommended — free)
+
+[PythonAnywhere](https://www.pythonanywhere.com) runs the script every day for free with a persistent database.
+
+### Step-by-step
+
+**1. Create a free account** at [pythonanywhere.com](https://www.pythonanywhere.com)
+
+**2. Open a Bash console** — click *Dashboard → New console → Bash*
+
+**3. Run the setup script:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/jbertranr/primertestclaudecode/claude/initial-testing-setup-e5dFn/setup_pythonanywhere.sh | bash
+```
+This clones the repo, creates a virtualenv, installs dependencies, and initialises the database.
+
+**4. Add your Telegram credentials:**
+```bash
+nano ~/swiss-job-finder/.env
+```
+Fill in `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` (see README section below for how to get these).
+
+**5. Enable Telegram in the config:**
+```bash
+nano ~/swiss-job-finder/config.yaml
+```
+Set `notifications > telegram > enabled: true`
+
+**6. Test a manual run:**
+```bash
+~/swiss-job-finder/.venv/bin/python ~/swiss-job-finder/main.py
+```
+You should receive a Telegram message within a minute.
+
+**7. Schedule the daily task:**
+- Go to *Dashboard → Tasks*
+- Click *Add a new scheduled task*
+- Set time: `08:00`
+- Command:
+```
+/home/YOUR_USERNAME/swiss-job-finder/.venv/bin/python /home/YOUR_USERNAME/swiss-job-finder/main.py
+```
+(Replace `YOUR_USERNAME` with your PythonAnywhere username)
+
+That's it — Arnaud will receive a Telegram message every morning with new jobs.
+
+### Important note on PythonAnywhere free tier
+
+The free tier restricts outbound HTTP to a whitelist of major domains. **LinkedIn and Indeed** (via `python-jobspy`) will work fine. **jobup.ch** and **jobs.ch** may be blocked — but you'll still get results from LinkedIn and Indeed every day. To unlock all sources, upgrade to the $5/month Hacker plan.
+
+---
+
+## Running daily automatically (alternative methods)
 
 ### Option A — cron (simplest)
 
