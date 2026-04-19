@@ -1,0 +1,12 @@
+services:
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data              # persists jobs.json and status.db
+      - ./config.yaml:/app/config.yaml  # edits in UI are saved locally
+      - ./storage:/app/storage        # optional: share local jobs.db too
+    env_file:
+      - .env
+    restart: unless-stopped

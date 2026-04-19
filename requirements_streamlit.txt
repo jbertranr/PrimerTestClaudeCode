@@ -1,0 +1,11 @@
+streamlit>=1.35
+pandas>=2.0
+python-jobspy>=1.1
+beautifulsoup4>=4.12
+httpx>=0.27
+python-telegram-bot>=21.0
+python-dotenv>=1.0
+Jinja2>=3.1
+pyyaml>=6.0
+# Optional: only if llm.enabled = true in config.yaml
+# anthropic>=0.27
