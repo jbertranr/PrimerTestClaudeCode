@@ -14,6 +14,7 @@ import yaml
 from dotenv import load_dotenv
 
 from scrapers.base import Job
+from scrapers.filters import apply_filters
 from scrapers.jobspy_scraper import JobSpyScraper
 from scrapers.jobup_scraper import JobupScraper
 from scrapers.jobs_ch_scraper import JobsChScraper
@@ -64,17 +65,27 @@ async def run_daily(config: dict) -> None:
         *[s.scrape() for s in scrapers], return_exceptions=True
     )
 
-    all_new_jobs: List[Job] = []
+    all_raw_jobs: List[Job] = []
     for result in results:
         if isinstance(result, Exception):
             logger.error("Scraper error: %s", result)
             continue
-        for job in result:
-            if db.is_new(job.id):
-                db.mark_seen(job)
-                all_new_jobs.append(job)
+        all_raw_jobs.extend(result)
 
-    logger.info("New jobs found: %d", len(all_new_jobs))
+    # Filter: Swiss locations only + relevant keywords only
+    filtered_jobs = apply_filters(all_raw_jobs)
+    logger.info(
+        "Jobs after filters: %d kept / %d discarded",
+        len(filtered_jobs), len(all_raw_jobs) - len(filtered_jobs)
+    )
+
+    all_new_jobs: List[Job] = []
+    for job in filtered_jobs:
+        if db.is_new(job.id):
+            db.mark_seen(job)
+            all_new_jobs.append(job)
+
+    logger.info("New jobs (not seen before): %d", len(all_new_jobs))
 
     if not all_new_jobs:
         logger.info("No new jobs today — nothing to send.")
