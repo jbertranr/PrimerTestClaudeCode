@@ -43,9 +43,24 @@ TOURISM_TERMS = {
     "billetterie", "tour operator", "destination",
 }
 
+INTERNATIONAL_TERMS = {
+    "nations unies", "united nations", "onu", "oms", "who",
+    "cicr", "icrc", "croix-rouge", "red cross",
+    "cio", "ioc", "olympic", "olympique",
+    "uefa", "cern", "omc", "wto", "ompi", "wipo",
+    "oit", "ilo", "unhcr", "unog", "unctad",
+    "coopération internationale", "international cooperation",
+    "humanitaire", "humanitarian",
+    "diplomatique", "diplomatic",
+    "ong", "ngo", "organisation internationale",
+    "international organization", "multilateral",
+    "développement international", "international development",
+}
+
 CATEGORY_TERMS = {
     "hospitality": HOSPITALITY_TERMS,
     "tourism": TOURISM_TERMS,
+    "international": INTERNATIONAL_TERMS,
 }
 
 

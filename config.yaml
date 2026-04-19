@@ -62,6 +62,35 @@ search:
         - "animateur"
       max_results_per_source: 20
 
+    international:
+      keywords:
+        - "Nations Unies"
+        - "United Nations"
+        - "organisations internationales"
+        - "ONU"
+        - "OMS"
+        - "WHO"
+        - "CICR"
+        - "ICRC"
+        - "Croix-Rouge"
+        - "CIO"
+        - "IOC"
+        - "UEFA"
+        - "CERN"
+        - "OMC"
+        - "WTO"
+        - "OMPI"
+        - "WIPO"
+        - "OIT"
+        - "ILO"
+        - "UNHCR"
+        - "coopération internationale"
+        - "humanitaire"
+        - "diplomatique"
+        - "ONG"
+        - "NGO"
+      max_results_per_source: 20
+
   # Only consider jobs posted in the last N hours
   hours_old: 24
 

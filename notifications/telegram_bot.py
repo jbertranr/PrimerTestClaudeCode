@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 CATEGORY_LABELS = {
     "hospitality": "🍽️ Hôtellerie / Restauration",
     "tourism": "🗺️ Tourisme",
+    "international": "🌐 Organisations Internationales",
 }
 
 MAX_MSG_LEN = 4000  # Telegram limit is 4096, keep margin
@@ -33,6 +34,7 @@ def _build_digest(jobs: List[Job], today: str) -> List[str]:
     """Build the full digest as a list of messages respecting Telegram's limit."""
     hospitality = [j for j in jobs if j.category == "hospitality"]
     tourism = [j for j in jobs if j.category == "tourism"]
+    international = [j for j in jobs if j.category == "international"]
 
     lines = [
         f"🇨🇭 *Offres du jour — {_escape(today)}*",
@@ -40,7 +42,11 @@ def _build_digest(jobs: List[Job], today: str) -> List[str]:
         "",
     ]
 
-    for category, cat_jobs in [("hospitality", hospitality), ("tourism", tourism)]:
+    for category, cat_jobs in [
+        ("hospitality", hospitality),
+        ("tourism", tourism),
+        ("international", international),
+    ]:
         if not cat_jobs:
             continue
         label = CATEGORY_LABELS[category]
