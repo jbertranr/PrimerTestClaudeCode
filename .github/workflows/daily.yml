@@ -1,0 +1,41 @@
+name: Daily Swiss Job Finder
+
+on:
+  schedule:
+    # 07:00 UTC = 08:00 Zurich (winter) / 09:00 Zurich (summer) — close enough
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+    # Allows manual run from GitHub → Actions tab (useful for testing)
+
+jobs:
+  find-jobs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore job database (deduplication)
+        uses: actions/cache@v4
+        with:
+          path: storage/jobs.db
+          # New cache key each run, but restore-keys finds the latest previous one
+          key: jobs-db-${{ github.run_id }}
+          restore-keys: |
+            jobs-db-
+
+      - name: Install dependencies
+        run: pip install --no-cache-dir -r requirements_pythonanywhere.txt
+
+      - name: Run job finder
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # Only needed if llm.enabled = true in config.yaml
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python main.py
